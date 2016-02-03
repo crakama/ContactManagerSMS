@@ -6,12 +6,15 @@ from cm_functions import Contacts
 	#print 'Hello World'
 
 ContactObj = Contacts()
-
-ContactObj.addcontact[Conlists]
-Conlists = [name, number]
+print ContactObj
+#Conlists = []
 name = input("Enter contact name: ")
 
 number = input("Enter contact number: ")
+Conlists = [name, number]
+ContactObj.addcontact[Conlists]
+
+
 
 
 
