@@ -43,6 +43,7 @@ def fn(self, arg):
         fn.__dict__.update(func.__dict__)
         return fn
 
+
 class Contacts (cmd.Cmd):
     intro = 'Manage your Contacts!' 
     prompt = 'cm'
@@ -59,7 +60,7 @@ class Contacts (cmd.Cmd):
        	#username = sn
        #	phonenumber = pn
        #elif
-        print "hjgjyg"
+        
         queryCurs.execute('''INSERT INTO cm_table (username, phonenumber) VALUES(?, ?)''', (username, phonenumber))
 
 
@@ -68,22 +69,23 @@ class Contacts (cmd.Cmd):
 
         print('Done!')
         exit()
-    def createTable():
 
-    	queryCurs.execute('CREATE TABLE IF NOT EXISTS cm_table(id INTEGER PRIMARY KEY, username TEXT, phonenumber NUMBER)')
-	
 
-    def main():
-	createTable()
-	#Contacts().cmdloop()
-	add(username, phonenumber)
+def createTable():
 
-	createDB.commit()
-	if __name__ == '__main__': main()
+        queryCurs.execute('CREATE TABLE IF NOT EXISTS cm_table(id INTEGER PRIMARY KEY, username TEXT, phonenumber NUMBER)')
 
-	opt = docopt(__doc__, sys.argv[1:])
+def add(username, phonenumber):
 
-	if opt['--interactive']:
-		Contacts().cmdloop()
+    queryCurs.execute('INSERT INTO cm_table (username, phonenumber) VALUES(?, ?)', (username, phonenumber))
 
-		print(opt)
+
+
+#def data_entry():
+          
+def main():
+    createTable()
+    add('cate', 07114)
+    createDB.commit()
+
+    queryCurs.execute( 'SELECT * FROM cm_table')

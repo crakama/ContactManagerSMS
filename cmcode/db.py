@@ -10,7 +10,13 @@ def createTable():
 def add(username, phonenumber):
 
 	queryCurs.execute('INSERT INTO cm_table (username, phonenumber) VALUES(?, ?)', (username, phonenumber))
+	print "New contact added"
 
+def read():
+	#pass
+	queryCurs.execute('SELECT * FROM cm_table WHERE username = "kate"')
+	for row in queryCurs.fetchall():
+		print(row)
 
 
 #def data_entry():
@@ -18,13 +24,11 @@ def add(username, phonenumber):
 def main():
 	createTable()
 	add('cate', 07114)
+	read()
 	createDB.commit()
 
-	queryCurs.execute( 'SELECT * FROM cm_table')
+	
 
-	for i in queryCurs:
-		for j in i:
-			print j
 
 
 	
