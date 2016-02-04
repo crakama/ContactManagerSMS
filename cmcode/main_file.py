@@ -4,7 +4,7 @@ import sys
 import sqlite3
 createDB = sqlite3.connect('cmdb.db')
 queryCurs = createDB.cursor()
-class PhoneBookDict(object):
+class  Contacts(object):
     def __init__(self):
 
         self.contactdict = {}
