@@ -4,73 +4,80 @@ import sys
 import sqlite3
 createDB = sqlite3.connect('cmdb.db')
 queryCurs = createDB.cursor()
+class PhoneBookDict(object):
+    def __init__(self):
 
+        self.contactdict = {}
 
-def createTable():
+    def createTable():
 
-    queryCurs.execute('CREATE TABLE IF NOT EXISTS cmtable(id INTEGER PRIMARY KEY, name TEXT, m_number NUMBER)')
-    pass
+        queryCurs.execute('CREATE TABLE IF NOT EXISTS cmtable(id INTEGER PRIMARY KEY, name TEXT, m_number NUMBER)')
 
+    def add(name, m_number):
 
-def add(name, m_number):
-    """Add a new name and number to the given phonebook.
-    Args:
-        name (str): name of the entry to add
-        number (str): phone number of the entry to add
-       
-    """
-    
-    queryCurs.execute('INSERT INTO cmtable (name, m_number) VALUES(?, ?)', (name, m_number))
-    print "New contact added"
-    lines = 0
-    lst = list()
+     queryCurs.execute('INSERT INTO cmtable (name, m_number) VALUES(?, ?)', (name, m_number))
+
+     print "New contact added"
+
+    def  searchname(name):   
+        count = 0
+        #lst = []
     #name = str (name)
-    #print name
-    v = unicode(name)
-    queryCurs.execute('SELECT * FROM cmtable WHERE name =(?)', (v, ) )
-    print "fetchall:"
-    result = queryCurs.fetchall() 
-    print result
-    for r in result:
-        lst.append(r)
-        lines += 1
-        print(r)
-        db.close()
+        print name
+    #v = unicode(name)
+        queryCurs.execute('SELECT name, m_number FROM cmtable')
+        result = queryCurs.fetchall()
+        dictresult = dict(result)
 
-def main():
-    pass
+        instance = []
+        for k, v in dictresult.iteritems():
+            if v == name:
+
+                instance.append(v)
+
+        if instance > 1:
+            for occur in instance:
+                print occur
+
+            raw_input("Which %s" % (name))
+
+        
+        #queryCurs.close()
+
+    def main():
+        pass
     #createTable()
 
     #add('cate', 07114)
     #read()
     #createDB.commit()
-if __name__ == '__main__': 
-    main()
-    args = sys.argv[:]
-    script = args.pop(0)    # name of script is first arg
-    if not args:
-        print "Command required"
-        quit()
-    command = args.pop(0)   # the next arg will be the main command
-
-    if command == 'add':
-        if len(args) != 2:
-            print "Name, number, and phonebook name required"
+    if __name__ == '__main__': 
+        main()
+        args = sys.argv[:]
+        script = args.pop(0)    # name of script is first arg
+        if not args:
+            print "Command required"
             quit()
-        name, m_number = args
-        createTable()
-        add_entry(name, m_number)
-        createDB.commit()
-        createDB.close()
+        command = args.pop(0)   # the next arg will be the main command
+
+        if command == 'add':
+            if len(args) != 2:
+                print "Name, number, required"
+                quit()
+                name, m_number = args
+                createTable()
+                add_entry(name, m_number)
+                createDB.commit()
+                createDB.close()
 
 
-    elif command == 'search':
-        if len(args) != 1:
-            print "Search Name is required"
-            quit()
-        name = args
-        searchname(name)
+        elif command == 'search':
+            if len(args) != 1:
+                print "Search Name is required"
+                quit()
+            name = args[0]
+            searchname(name)
 
     
-    else:
-        print "Invalid command"
+        else:
+            print "Invalid command"
