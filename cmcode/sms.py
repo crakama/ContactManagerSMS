@@ -21,7 +21,7 @@ class SMS():
 	try:
 	    # Thats it, hit send and we'll take care of the rest.
 	    
-	    results = gateway.sendMessage(to, message)
+	    results = gateway.sendMessage(to, msg)
 	    
 	    for recipient in results:
 	        # status is either "Success" or "error message"
