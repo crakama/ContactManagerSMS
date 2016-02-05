@@ -46,8 +46,8 @@ class  Contacts(object):
             instance.append(str(dictresult.get(key)))
 
         contactlist = ",".join((instance))
-        #print contactlist
-        return contactlist
+        print contactlist
+        #return contactlist
 
     def  searchname(name):   
         count = 0
@@ -63,8 +63,8 @@ class  Contacts(object):
 
                 instance.append(str(dictresult.get(key)))
 
-                #print instance[0]
-                return instance[0]
+                print instance[0]
+                #return instance[0]
      
 
         if len(instance) > 1:
