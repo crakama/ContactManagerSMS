@@ -11,7 +11,7 @@ class SMS():
 	apikey   = "00b63f212d6431ef6695409ec668e28f354f6387ab854dc5167667df8f60a1a5"
 	# Specify the numbers that you want to send to in a comma-separated list
 	# Please ensure you include the country code (+254 for Kenya in this case)
-	to      = ",".join(contactlist)
+	to      = "+254728590438, +254737882875,+254721949259"
 	# And of course we want our recipients to know what we really do
 	message = "I'm a lumberjack and it's ok, I sleep all night and I work all day"
 	# Create a new instance of our awesome gateway class
