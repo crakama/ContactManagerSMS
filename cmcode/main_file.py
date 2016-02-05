@@ -1,13 +1,19 @@
 import os
 import sys
-
+# Import the helper gateway class
+from AfricasTalkingGateway import AfricasTalkingGateway, AfricasTalkingGatewayException
 import sqlite3
+
 createDB = sqlite3.connect('cmdb.db')
 queryCurs = createDB.cursor()
+
 class  Contacts(object):
+
     def __init__(self):
 
         self.contactdict = {}
+
+    
 
     def createTable():
 
@@ -23,25 +29,29 @@ class  Contacts(object):
 
 
 
-    def sendtext(num):
-        queryCurs.execute('SELECT m_number FROM cmtable')
+    def sendtext(num, msg):
+
+        queryCurs.execute('SELECT name, m_number FROM cmtable')
+
         result = queryCurs.fetchall()
+
         dictresult = dict(result)
-        print dictresult
+
+        # print dictresult
+
         instance = []
         #for k, v in dictresult.iteritems():
         for key in dictresult.iterkeys():
             #if key == name:
-                instance.append(dictresult.get(key))
-                print instance[0]
- 
+            instance.append(str(dictresult.get(key)))
+
+        contactlist = ",".join((instance))
+        #print contactlist
+        return contactlist
 
     def  searchname(name):   
         count = 0
-        #lst = []
-    #name = str (name)
-        #print name
-    #v = unicode(name)
+
         queryCurs.execute('SELECT name, m_number FROM cmtable')
         result = queryCurs.fetchall()
         dictresult = dict(result)
@@ -49,11 +59,13 @@ class  Contacts(object):
         instance = []
         #for k, v in dictresult.iteritems():
         for key in dictresult.iterkeys():
-            if key == name:
-                instance.append(dictresult.get(key))
-                print instance[0]
- 
-                #instance.append(v)
+            if key.lower() == name.lower():
+
+                instance.append(str(dictresult.get(key)))
+
+                #print instance[0]
+                return instance[0]
+     
 
         if len(instance) > 1:
             choice = None
@@ -62,34 +74,25 @@ class  Contacts(object):
 
                 print("Which {} do you mean".format(name))
 
-                for index, name in enumerate(instances):
+                for index, name in enumerate(instance):
 
-                    print("[{}] {} {}".format(index, name, second_name))
+                    print("[{}] {} {}".format(index, name, lname))
 
                     choice = int(raw_input("> "))
 
-                if choice not in range(len(instances)):
+                if choice not in range(len(instance)):
 
                     print("Wrong choice")
 
                     choice = None
+            print choice
 
-            #for occur in instance:
-                #print instance.append(dictresult.get(occur))
-                #print occur
+            #raw_input("Which %s" % (name))
 
-            raw_input("Which %s" % (name))
-
-        
-        #queryCurs.close()
 
     def main():
         pass
-    #createTable()
 
-    #add('cate', 07114)
-    #read()
-    #createDB.commit()
     if __name__ == '__main__': 
         main()
         args = sys.argv[:]
@@ -110,18 +113,20 @@ class  Contacts(object):
             createDB.close()
 
 
-        elif command == 'search':
+        elif command == 'lookup':
             if len(args) != 1:
                 print "Search Name is required"
                 quit()
             name = args[0]
             searchname(name)
+
         elif command == 'text':
-            if len(args) != 1:
-            print "text Name and message is required"
+            if len(args) != 2:
+                print "text Name and message is required"
                 quit()
             name = args[0]
-            searchname(name)
+            message = args[1]
+            sendtext(name, message)
 
     
         else:
